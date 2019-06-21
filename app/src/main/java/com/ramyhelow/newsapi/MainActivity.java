@@ -72,9 +72,10 @@ public class MainActivity extends AppCompatActivity {
 
                         String title = jsonArticle.getString("title");
                         String image = jsonArticle.getString("urlToImage");
-                        String description = jsonArticle.getString("content");
+                        String description = jsonArticle.getString("description");
+                        String url = jsonArticle.getString("url");
 
-                        data.add(new Article(image, title, description));
+                        data.add(new Article(image, title, description, url));
 
                         hideDialog();
                     }
@@ -97,5 +98,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         AppController.getInstance().addToRequestQueue(jsonObjectRequest);
+
     }
 }

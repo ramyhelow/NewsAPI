@@ -4,11 +4,13 @@ public class Article {
     private String article_image;
     private String article_title;
     private String article_description;
+    private String article_url;
 
-    public Article(String article_image, String article_title, String article_description) {
+    public Article(String article_image, String article_title, String article_description, String article_url) {
         this.article_image = article_image;
         this.article_title = article_title;
         this.article_description = article_description;
+        this.article_url = article_url;
     }
 
     public String getArticle_image() {
@@ -33,5 +35,13 @@ public class Article {
 
     public void setArticle_description(String article_description) {
         this.article_description = article_description;
+    }
+
+    public String getArticle_url() {
+        return article_url;
+    }
+
+    public void setArticle_url(String article_url) {
+        this.article_url = article_url;
     }
 }

@@ -1,21 +1,23 @@
 package com.ramyhelow.newsapi.Adapter;
 
 import android.app.Activity;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.ramyhelow.newsapi.Model.Article;
 import com.ramyhelow.newsapi.R;
 import com.squareup.picasso.Picasso;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import java.util.ArrayList;
 
@@ -38,14 +40,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         myViewHolder.article_title.setText(data.get(i).getArticle_title());
-        myViewHolder.article_summary.setText(data.get(i).getArticle_description());
+        myViewHolder.article_description.setText(data.get(i).getArticle_description());
         Picasso.get().load(data.get(i).getArticle_image()).placeholder(R.drawable.ic_launcher_background).into(myViewHolder.article_image);
 
-
+        final String url = data.get(i).getArticle_url();
         myViewHolder.article_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity,"asda", Toast.LENGTH_SHORT).show();
+                new FinestWebView.Builder(activity).show(url);
             }
         });
     }
@@ -57,11 +59,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        public LinearLayout article_item_layout;
+        public CardView article_item_layout;
 
         public ImageView article_image;
         public TextView article_title;
-        public TextView article_summary;
+        public TextView article_description;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -71,7 +73,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
 
             article_image = itemView.findViewById(R.id.article_image);
             article_title = itemView.findViewById(R.id.article_title);
-            article_summary = itemView.findViewById(R.id.article_summary);
+            article_description = itemView.findViewById(R.id.article_description);
 
 
         }
