@@ -1,7 +1,7 @@
 # NewsAPI
 Simple News App using newsapi.org API.<br /> 
 
-### Technologies used: ###<br /> 
+### Technologies used:<br /> 
   * **RecyclerView**<br /> 
   * **Webview** <br>(https://github.com/TheFinestArtist/FinestWebView-Android)<br /> 
   * **Picasso** <br>(https://github.com/square/picasso)<br /> 
