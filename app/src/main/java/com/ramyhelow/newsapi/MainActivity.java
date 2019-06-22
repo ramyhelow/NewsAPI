@@ -3,19 +3,18 @@ package com.ramyhelow.newsapi;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.ramyhelow.newsapi.Adapter.ArticleAdapter;
+import com.ramyhelow.newsapi.Adapter.Sources_ListViewAdapter;
 import com.ramyhelow.newsapi.Controller.AppController;
 import com.ramyhelow.newsapi.Model.Article;
+import com.ramyhelow.newsapi.Model.Source;
 import com.ramyhelow.newsapi.URL.URL;
 
 import org.json.JSONArray;
@@ -26,9 +25,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    ArrayList<Article> data;
-    ArticleAdapter articleAdapter;
+    ArrayList<Source> data_sources;
+    Sources_ListViewAdapter sources_ListViewAdapter;
     ProgressDialog progressDialog;
 
     @Override
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getAllArticles();
+        getTopHeadlines();
     }
 
 
@@ -51,31 +49,29 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.hide();
     }
 
-    public void getAllArticles() {
+    public void getTopHeadlines() {
         showDialog();
 
-        data = new ArrayList<>();
+        data_sources = new ArrayList<>();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL.URL, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL.URL_SOURCES, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
                 try {
-                    JSONArray jsonArrayArticles = response.getJSONArray("articles");
+                    JSONArray jsonArrayArticles = response.getJSONArray("sources");
 
 
                     for (int i = 0; i < jsonArrayArticles.length(); i++) {
 
 
-                        JSONObject jsonArticle = jsonArrayArticles.getJSONObject(i);
+                        JSONObject jsonSource = jsonArrayArticles.getJSONObject(i);
 
 
-                        String title = jsonArticle.getString("title");
-                        String image = jsonArticle.getString("urlToImage");
-                        String description = jsonArticle.getString("description");
-                        String url = jsonArticle.getString("url");
+                        String source_id = jsonSource.getString("id");
+                        String source_name = jsonSource.getString("name");
 
-                        data.add(new Article(image, title, description, url));
+                        data_sources.add(new Source(source_id,source_name));
 
                         hideDialog();
                     }
@@ -84,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
                     hideDialog();
                 }
 
-                recyclerView = findViewById(R.id.articles_recyclerView);
-                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                articleAdapter = new ArticleAdapter(data, MainActivity.this);
-                recyclerView.setAdapter(articleAdapter);
+                ListView sources_listView = findViewById(R.id.sources_listView);
+                Sources_ListViewAdapter sources_listViewAdapter = new Sources_ListViewAdapter(MainActivity.this,data_sources);
+                sources_listView.setAdapter(sources_listViewAdapter);
+
             }
         }, new Response.ErrorListener() {
             @Override

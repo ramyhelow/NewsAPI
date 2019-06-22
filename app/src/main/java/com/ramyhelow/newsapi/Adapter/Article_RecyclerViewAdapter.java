@@ -1,12 +1,10 @@
 package com.ramyhelow.newsapi.Adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,11 +19,11 @@ import com.thefinestartist.finestwebview.FinestWebView;
 
 import java.util.ArrayList;
 
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHolder> {
+public class Article_RecyclerViewAdapter extends RecyclerView.Adapter<Article_RecyclerViewAdapter.MyViewHolder> {
     ArrayList<Article> data;
     Activity activity;
 
-    public ArticleAdapter(ArrayList<Article> data, Activity activity) {
+    public Article_RecyclerViewAdapter(ArrayList<Article> data, Activity activity) {
         this.data = data;
         this.activity = activity;
     }
@@ -34,14 +32,19 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(activity).inflate(R.layout.article_list_item,viewGroup,false);
-        return new ArticleAdapter.MyViewHolder(itemView);
+        return new Article_RecyclerViewAdapter.MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         myViewHolder.article_title.setText(data.get(i).getArticle_title());
         myViewHolder.article_description.setText(data.get(i).getArticle_description());
-        Picasso.get().load(data.get(i).getArticle_image()).placeholder(R.drawable.ic_launcher_background).into(myViewHolder.article_image);
+
+        if(!data.get(i).getArticle_image().isEmpty()){
+            Picasso.get().load(data.get(i).getArticle_image()).placeholder(R.drawable.loading).into(myViewHolder.article_image);
+        }else{
+            Picasso.get().load(R.drawable.no_image_available).into(myViewHolder.article_image);
+        }
 
         final String url = data.get(i).getArticle_url();
         myViewHolder.article_item_layout.setOnClickListener(new View.OnClickListener() {
