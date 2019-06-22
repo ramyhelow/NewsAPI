@@ -1,11 +1,11 @@
 # NewsAPI
-Simple News App using newsapi.org API.\n
+Simple News App using newsapi.org API.<br /> <br /> 
 
-Technologies used:\n
-  RecyclerView\n
-  Webview (https://github.com/TheFinestArtist/FinestWebView-Android)\n
-  Picasso (https://github.com/square/picasso)\n
-  Volley (https://github.com/google/volley)\n
+Technologies used:<br /> 
+  RecyclerView<br /> 
+  Webview (https://github.com/TheFinestArtist/FinestWebView-Android)<br /> 
+  Picasso (https://github.com/square/picasso)<br /> 
+  Volley (https://github.com/google/volley)<br /> 
   
 
 ![Alt text](/Screenshots/home.png?raw=true "Home Screen")
